@@ -1,0 +1,50 @@
+# Unity generated/local directories
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Ll]ogs/
+[Bb]uild/
+[Bb]uilds/
+[Cc]rash[Rr]eports/
+[Uu]serSettings/
+[Mm]emoryCaptures/
+[Rr]ecordings/
+
+# Unity build artifacts
+*.apk
+*.aab
+*.ipa
+*.unitypackage
+*.app
+
+# Visual Studio / Rider / VS Code
+.vs/
+.vscode/
+.idea/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# Node / npm
+node_modules/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Three.js art reference scratch files
+artifacts/commercial-scene/node_modules/
+
+# IMPORTANT: do NOT ignore *.meta — Unity needs these in source control
