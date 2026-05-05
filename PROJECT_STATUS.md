@@ -23,43 +23,47 @@ lines). This was visual-quality iteration without a playable loop, no input
 handling, no state machine. The shader work is preserved as art reference
 under `art-reference/` — no longer the deliverable.
 
-## Status snapshot (2026-05-04)
-- Git: NOT INITIALIZED — must be initialized as github.com/Alphiex/lumen-game
+## Status snapshot (2026-05-05)
+- Git: INITIALIZED — github.com/Alphiex/lumen-game (main branch, push confirmed)
 - Stack: Unity (URP) on mobile + WebGL (URP scales to both)
 - Existing assets: Quaternius low-poly nature pack at `unity/Assets/ThirdParty/`
-- Existing art reference: 7 captured screenshots + scene.html (Three.js post-processing pipeline reference)
+- Existing art reference: 7 captured screenshots + scene.html in `art-reference/`
+- Note: `artifacts/commercial-scene/` still present alongside `art-reference/` (git
+  deduplicates by content hash; to tidy, a follow-up `git rm -r artifacts/commercial-scene/`
+  commit suffices — not blocking)
 
 ## Done
 - [x] Three.js commercial scene with 280-pass post-processing pipeline (now art reference)
 - [x] 7 captured screenshots (baseline, crane, dolly, flythrough, hero-reveal, latest)
 - [x] Quaternius nature asset pack imported into Unity Assets/ThirdParty
 - [x] Capture workflow (Playwright headless Chromium → 1920x1080 PNG)
+- [x] **Init lumen-game repo** — git init, .gitignore (Unity), README.md, art-reference/
+      moved from artifacts/commercial-scene/, pushed to github.com/Alphiex/lumen-game
+      main branch. 425 files, 63,524 insertions. **commit: 2c78996**
 
 ## Next 3 deliverables (in order)
-1. **Init the game in git as github.com/Alphiex/lumen-game** — commit current
-   Unity project + move shader scene to `art-reference/` (kept, not active).
-   Branch `main`. Add `.gitignore` for Unity (Library/, Temp/, Logs/).
-2. **First playable Unity scene (mobile)** — third-person fox controller (use
-   Unity Starter Asset Third Person Controller, swap character mesh for a
-   low-poly fox from Quaternius or free Mixamo asset). One-thumb touch input:
+1. **First playable Unity scene (mobile)** — Unity 2022.3 LTS project properly
+   initialized (ProjectSettings, Packages with URP, Input System). Third-person fox
+   controller (use Unity Starter Asset Third Person Controller, swap character mesh
+   for a low-poly fox from Quaternius or free Mixamo asset). One-thumb touch input:
    hold-anywhere-on-screen → fox runs toward finger; release → fox stops.
    Quaternius nature props placed in a small fog-shrouded scene. URP volume
    with bloom + color grading + depth of field + vignette + atmospheric fog
    tuned to match the art-reference cinematic feel. iOS + Android build
-   targets verified.
-3. **First TestFlight + internal-track Play build** — full biome loop:
+   targets verified. Commit + push to main.
+2. **First TestFlight + internal-track Play build** — full biome loop:
    spawn → memory motes scattered → biome gate at end → reaching gate ends
    the loop with simple fade-out. Apple Developer + Google Play Console
    uploads. Mike opens build on physical device, plays through one loop,
    ships feedback in Telegram topic 400.
 
 ## Blocked / decisions needed from Mike
-- Apple Developer account access for TestFlight upload (same account as
-  TeeTime — likely already available)
-- Google Play Console access (one-time $25 dev account fee if not yet paid)
-- Game name confirmation — "Lumen" or alternative? Affects repo + bundle id.
-- Music: ambient soundtrack OK to use Royalty-Free / CC0 sources, OR Mike
-  has a composer in mind?
+- Apple Developer account access for TestFlight upload (needed for deliverable #2)
+- Google Play Console access (one-time $25 dev account fee if not yet paid; needed for deliverable #2)
+- Music: ambient soundtrack OK to use Royalty-Free / CC0 sources (plan: CC0 via
+  Pixabay Music / Free Music Archive), OR Mike has a composer in mind?
+- ~~Game name confirmation~~ — RESOLVED: "Lumen", repo = lumen-game, bundle id to be
+  set in Unity Player Settings during deliverable #1 Unity setup
 
 ## Out of scope for v1 (ruled out to prevent scope creep)
 - Multiple biomes — v1 ships ONE biome loop
