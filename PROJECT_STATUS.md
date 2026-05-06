@@ -48,19 +48,28 @@ under `art-reference/` — no longer the deliverable.
       MemoryMote, BiomeGate), Assets/Scenes/TheHush.unity (scene stub — directional
       light, camera, ground plane, GlobalPostProcessVolume, DaylightManager).
       **commit: 2120311**
+- [x] **Scene wired — Fox, WispLight, MemoryMotes, BiomeGate, UI, AnimatorController**
+      TheHush.unity fully wired: Fox capsule (NavMeshAgent + FoxController + Animator
+      tagged "Fox"), WispLight (PointLight + WispController with mainCamera+fox refs),
+      10 MemoryMotes scattered z=15→70, BiomeGate at z=85 with trigger + warm gold light,
+      UI Canvas (DaylightSlider top-center, OutcomeText centered hidden, FadeOverlay
+      full-screen black CanvasGroup alpha=0), DaylightManager refs wired, AudioSource
+      added, FoxAnimator.controller (Speed float + LookAround trigger) created.
+      com.unity.ai.navigation 1.1.5 added to manifest for NavMeshSurface.
+      NavMesh bake: open Unity → Window → AI → Navigation → Bake (Ground is already
+      NavigationStatic). **commit: c61d7ac**
 
 ## Next 3 deliverables (in order)
-1. **Wire the scene in Unity Editor + bake NavMesh** — Open TheHush.unity in Unity
-   2022.3 LTS. Import fox model (Quaternius animal pack or free Mixamo Capoeira Fox).
-   Add NavMeshAgent + FoxController + Animator to fox prefab. Wire WispController
-   references (mainCamera, fox). Place WispController on a child Point Light object.
-   Bake NavMesh on the ground plane. Place 8-12 MemoryMote instances. Place BiomeGate
-   at scene end. Wire DaylightManager UI refs (Slider, TextMeshProUGUI, CanvasGroup).
-   Verify fox runs to wisp on Play. Commit + push.
-2. **URP Volume tuning + scene dressing** — Place Quaternius FBX trees/rocks/ferns in
-   the scene. Tune LumenVolumeProfile in-engine (Bloom threshold, vignette, ACES
-   tonemapping curve). Add URP volumetric fog override. Screenshot comparison against
-   art-reference. Commit + push.
+1. **URP Volume tuning + scene dressing** — Place Quaternius FBX trees/rocks/ferns in
+   the scene via YAML (use fileID 10xxx range). Tune LumenVolumeProfile YAML (Bloom
+   threshold 0.8, vignette intensity 0.35, ACES tonemapping). Add NavMeshSurface
+   component to Ground (com.unity.ai.navigation already in manifest). Screenshot
+   comparison against art-reference baked via Unity batch mode or note for Mike to
+   open and bake. Commit + push.
+2. **Fox model swap + animations** — Replace capsule placeholder with Quaternius
+   animal pack fox mesh (or Mixamo fox FBX). Wire idle/walk/run animation clips to
+   FoxAnimator states. Tag fox collider as "Fox". Test NavMesh walk in batch mode.
+   Commit + push.
 3. **First TestFlight + internal-track Play build** — full biome loop:
    spawn → memory motes scattered → biome gate at end → reaching gate ends
    the loop with simple fade-out. Apple Developer + Google Play Console
@@ -72,6 +81,9 @@ under `art-reference/` — no longer the deliverable.
 - Google Play Console access (one-time $25 dev account fee if not yet paid; needed for deliverable #3)
 - Music: ambient soundtrack OK to use Royalty-Free / CC0 sources (plan: CC0 via
   Pixabay Music / Free Music Archive), OR Mike has a composer in mind?
+- **NavMesh bake**: one-time manual step — open Unity 2022.3 LTS → open TheHush scene
+  → Window → AI → Navigation → Bake. Takes ~10 seconds. Required for fox movement.
+  Fox will compile and run without it but won't pathfind until baked.
 - ~~Game name confirmation~~ — RESOLVED: "Lumen", repo = lumen-game, bundle id to be
   set in Unity Player Settings during deliverable #1 Unity setup
 
@@ -97,3 +109,4 @@ match is not required and would block delivery indefinitely.
 |------|--------|-------------|
 | 2026-05-05 | 2c78996 | Repo init, .gitignore, README, art-reference moved |
 | 2026-05-05 | 2120311 | Unity project structure: Packages, ProjectSettings, URP pipeline assets, all 5 core C# scripts, TheHush scene stub |
+| 2026-05-06 | c61d7ac | TheHush scene wired: Fox+NavMeshAgent, WispLight, 10 MemoryMotes, BiomeGate, UI canvas, FoxAnimator controller, DaylightManager refs |

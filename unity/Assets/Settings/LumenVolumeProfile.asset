@@ -28,7 +28,7 @@ MonoBehaviour:
       active: 1
       parameters:
       - overrideState: 1
-        value: 0.85   # threshold
+        value: 0.8    # threshold
       - overrideState: 1
         value: 0.9    # intensity
       - overrideState: 1
@@ -44,7 +44,7 @@ MonoBehaviour:
       - overrideState: 1
         value: {r: 0, g: 0, b: 0, a: 1}  # color black
       - overrideState: 1
-        value: 0.32   # intensity
+        value: 0.35   # intensity
       - overrideState: 1
         value: 0.5    # smoothness
   # Color Adjustments — warm amber tint
