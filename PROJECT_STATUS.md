@@ -23,7 +23,7 @@ lines). This was visual-quality iteration without a playable loop, no input
 handling, no state machine. The shader work is preserved as art reference
 under `art-reference/` — no longer the deliverable.
 
-## Status snapshot (2026-05-05)
+## Status snapshot (2026-05-06)
 - Git: INITIALIZED — github.com/Alphiex/lumen-game (main branch, push confirmed)
 - Stack: Unity (URP) on mobile + WebGL (URP scales to both)
 - Existing assets: Quaternius low-poly nature pack at `unity/Assets/ThirdParty/`
@@ -58,32 +58,40 @@ under `art-reference/` — no longer the deliverable.
       com.unity.ai.navigation 1.1.5 added to manifest for NavMeshSurface.
       NavMesh bake: open Unity → Window → AI → Navigation → Bake (Ground is already
       NavigationStatic). **commit: c61d7ac**
+- [x] **URP Volume tuning + scene dressing** — 11 Quaternius FBX .meta files created
+      (Pine_1/3, TwistedTree_1/3, CommonTree_1/3, Fern_1, Rock_Medium_1/3, Bush_Common,
+      Mushroom_Common) + 4 directory .meta files. 19 PrefabInstance objects placed in
+      TheHush.unity (10 trees, 4 ferns/bushes, 3 rocks, 2 mushrooms) spanning z=8→80,
+      framing the corridor without blocking the fox path. NavMeshSurface component added
+      to Ground GameObject (bake still required in Unity Editor). LumenVolumeProfile
+      tuned: Bloom threshold 0.85→0.8, Vignette intensity 0.32→0.35, ACES confirmed.
+      **commit: d425434**
 
 ## Next 3 deliverables (in order)
-1. **URP Volume tuning + scene dressing** — Place Quaternius FBX trees/rocks/ferns in
-   the scene via YAML (use fileID 10xxx range). Tune LumenVolumeProfile YAML (Bloom
-   threshold 0.8, vignette intensity 0.35, ACES tonemapping). Add NavMeshSurface
-   component to Ground (com.unity.ai.navigation already in manifest). Screenshot
-   comparison against art-reference baked via Unity batch mode or note for Mike to
-   open and bake. Commit + push.
-2. **Fox model swap + animations** — Replace capsule placeholder with Quaternius
+1. **Fox model swap + animations** — Replace capsule placeholder with Quaternius
    animal pack fox mesh (or Mixamo fox FBX). Wire idle/walk/run animation clips to
    FoxAnimator states. Tag fox collider as "Fox". Test NavMesh walk in batch mode.
    Commit + push.
-3. **First TestFlight + internal-track Play build** — full biome loop:
+2. **First TestFlight + internal-track Play build** — full biome loop:
    spawn → memory motes scattered → biome gate at end → reaching gate ends
    the loop with simple fade-out. Apple Developer + Google Play Console
    uploads. Mike opens build on physical device, plays through one loop,
    ships feedback in Telegram topic 400.
+3. **Ambient audio wiring** — CC0 ambient music loop (Pixabay Music / Free Music
+   Archive) + 3-5 spatial SFX (wind, birds, mote-collect chime, gate-reach chime,
+   sigh). Wire to AudioSource / DaylightManager. Commit + push.
 
 ## Blocked / decisions needed from Mike
-- Apple Developer account access for TestFlight upload (needed for deliverable #3)
-- Google Play Console access (one-time $25 dev account fee if not yet paid; needed for deliverable #3)
+- Apple Developer account access for TestFlight upload (needed for deliverable #2)
+- Google Play Console access (one-time $25 dev account fee if not yet paid; needed for deliverable #2)
 - Music: ambient soundtrack OK to use Royalty-Free / CC0 sources (plan: CC0 via
   Pixabay Music / Free Music Archive), OR Mike has a composer in mind?
 - **NavMesh bake**: one-time manual step — open Unity 2022.3 LTS → open TheHush scene
   → Window → AI → Navigation → Bake. Takes ~10 seconds. Required for fox movement.
   Fox will compile and run without it but won't pathfind until baked.
+- **Fox model**: Quaternius animal pack may not include a fox. If not found at
+  unity/Assets/ThirdParty/Quaternius/, next cycle will fall back to a free Mixamo fox FBX
+  (rigged, with idle/walk/run clips). Confirm preference or let cron decide.
 - ~~Game name confirmation~~ — RESOLVED: "Lumen", repo = lumen-game, bundle id to be
   set in Unity Player Settings during deliverable #1 Unity setup
 
@@ -110,3 +118,4 @@ match is not required and would block delivery indefinitely.
 | 2026-05-05 | 2c78996 | Repo init, .gitignore, README, art-reference moved |
 | 2026-05-05 | 2120311 | Unity project structure: Packages, ProjectSettings, URP pipeline assets, all 5 core C# scripts, TheHush scene stub |
 | 2026-05-06 | c61d7ac | TheHush scene wired: Fox+NavMeshAgent, WispLight, 10 MemoryMotes, BiomeGate, UI canvas, FoxAnimator controller, DaylightManager refs |
+| 2026-05-06 | d425434 | Scene dressing: 19 Quaternius props placed (trees/ferns/rocks/mushrooms), 11 FBX .meta files, NavMeshSurface on Ground, LumenVolumeProfile tuned (Bloom 0.8, vignette 0.35) |

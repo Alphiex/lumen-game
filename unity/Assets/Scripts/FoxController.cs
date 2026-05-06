@@ -23,6 +23,7 @@ public class FoxController : MonoBehaviour
 
     NavMeshAgent _agent;
     Animator _anim;
+    ProceduralFoxAnimator _procAnim; // optional — only present on the primitive-fox prototype
     FoxState _state = FoxState.Idle;
     float _stopTimer;
     static readonly int AnimSpeed = Animator.StringToHash("Speed");
@@ -32,6 +33,7 @@ public class FoxController : MonoBehaviour
     {
         _agent = GetComponent<NavMeshAgent>();
         _anim  = GetComponent<Animator>();
+        _procAnim = GetComponent<ProceduralFoxAnimator>();
         _agent.speed = baseRunSpeed;
         _agent.stoppingDistance = 0.3f;
         _agent.updateRotation = true;
@@ -75,6 +77,13 @@ public class FoxController : MonoBehaviour
 
         // Drive animator
         _anim.SetFloat(AnimSpeed, speed);
+
+        // Drive procedural animator (optional — primitive prototype fox only)
+        if (_procAnim != null)
+        {
+            _procAnim.SetSpeed(speed);
+            _procAnim.SetLookAround(_state == FoxState.Looking);
+        }
     }
 
     void TransitionTo(FoxState next)
