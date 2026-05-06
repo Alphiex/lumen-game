@@ -81,21 +81,34 @@ under `art-reference/` — no longer the deliverable.
       (scene 77KB → 256KB). Fox can now pathfind at runtime without any manual Unity Editor
       step. 62 additional Quaternius .meta files + ProjectSettings finalized.
       NavMesh bake blocked item RESOLVED. **commit: 99484c2**
+- [x] **TheHush.unity YAML fix** — Converted scene back to text YAML (NavMeshData stored
+      externally). Scene now has 33 GameObjects including 11 procedural fox parts persisted
+      by FoxMeshBuilder [ExecuteAlways] during bake. **commit: eae54d8**
+- [x] **Touch input polish + wisp visual orb** — WispMeshBuilder.cs: [ExecuteAlways]
+      builds emissive sphere child ("WispOrb") with HDR pale-cyan URP emissive material
+      (baseColor × 2.5 emission). WispController.cs refactored: tap-vs-hold via 0.15s
+      threshold (tap = scale-pop pulse, fox stays; hold = wisp follows + fox tracks),
+      smooth light-dim coroutine on release (0.3s fade), mesh visibility synced, initial
+      snap-to-finger on press-down. TheHush.unity: WispMeshBuilder component wired to
+      WispLight. Inspector knobs: tapPulseDuration, tapPulseScalePeak, tapPulseIntensity.
+      **commit: 146b702**
 
 ## Next 3 deliverables (in order)
 1. **Ambient audio wiring** — CC0 ambient music loop (Pixabay Music / Free Music
    Archive) + 3-5 spatial SFX (wind, birds, mote-collect chime, gate-reach chime,
    sigh). Wire to AudioSource / DaylightManager. Commit + push.
-   ⚠️ Needs Mike's OK: CC0 sources are the plan — confirm or name a preferred composer.
+   ⚠️ BLOCKED: Needs Mike's OK on CC0 sources — confirm or name a preferred composer.
 2. **First TestFlight + internal-track Play build** — full biome loop:
    spawn → memory motes scattered → biome gate at end → reaching gate ends
    the loop with simple fade-out. Apple Developer + Google Play Console
    uploads. Mike opens build on physical device, plays through one loop,
    ships feedback in Telegram topic 400.
    ⚠️ BLOCKED on Apple Developer + Google Play Console access (see Blocked section).
-3. **Touch input polish + wisp visual** — Validate one-thumb input (hold → wisp appears
-   at finger, fox tracks; release → wisp dims, fox stops). Add glowing wisp orb mesh
-   (emissive material, point light child). Test in Unity Editor play mode. Commit + push.
+3. **MemoryMote visual orb + WebGL playtest build** — Add emissive sphere mesh
+   to each MemoryMote GameObject (pattern: WispMeshBuilder; pale-gold emissive
+   color distinct from wisp cyan). Then configure Unity WebGL build target and
+   export a playable browser build — shareable URL, no developer accounts needed.
+   No blockers — can ship next cycle.
 
 ## Blocked / decisions needed from Mike
 - Apple Developer account access for TestFlight upload (needed for deliverable #2)
@@ -137,3 +150,5 @@ match is not required and would block delivery indefinitely.
 | 2026-05-06 | d425434 | Scene dressing: 19 Quaternius props placed (trees/ferns/rocks/mushrooms), 11 FBX .meta files, NavMeshSurface on Ground, LumenVolumeProfile tuned (Bloom 0.8, vignette 0.35) |
 | 2026-05-06 | 24b0ec3 | Fox model v1: FoxMeshBuilder (11-part primitive rig), ProceduralFoxAnimator (trot gait/breathing/tail sway), FoxController wired, FoxAnimator.controller 1D blend tree |
 | 2026-05-06 | 99484c2 | Scene wiring complete: FoxMeshBuilder+ProceduralFoxAnimator on Fox GameObject, NavMesh batch bake SUCCEEDED (1 surface, scene saved), 62 Quaternius .meta files, ProjectSettings finalized |
+| 2026-05-06 | eae54d8 | TheHush.unity YAML fix: NavMeshData stored externally, scene 33 GOs confirmed, text YAML verified |
+| 2026-05-06 | 146b702 | Touch input polish + wisp visual: WispMeshBuilder emissive orb, tap-vs-hold (0.15s), smooth dim, mesh toggle, TheHush.unity wired |
