@@ -66,12 +66,25 @@ under `art-reference/` — no longer the deliverable.
       to Ground GameObject (bake still required in Unity Editor). LumenVolumeProfile
       tuned: Bloom threshold 0.85→0.8, Vignette intensity 0.32→0.35, ACES confirmed.
       **commit: d425434**
+- [x] **Fox model v1 + animations** — No Quaternius fox in pack (nature-only); procedural
+      fox fallback authorized + executed. FoxMeshBuilder.cs: [ExecuteAlways] script builds
+      11-child primitive rig (Body capsule, Head sphere, Snout cube, EarL/R cubes, TailBase/
+      TailTip spheres, 4 leg capsules) with amber URP material. ProceduralFoxAnimator.cs:
+      transform-driven idle/walk/run/lookAround animation (breathing bob, trot gait at 90°
+      leg phase offset, tail sway, ear flick/perk). FoxController updated to drive proc
+      animator. FoxAnimator.controller upgraded to 1D blend tree (Idle@0/Walk@1/Run@2) +
+      LookAround state. **commit: 24b0ec3**
+      ⚠️ One manual step: open TheHush.unity in Unity → select Fox GameObject → Add
+      Component → FoxMeshBuilder + ProceduralFoxAnimator (both scripts auto-discover child
+      refs on Awake). NavMesh bake still needed too (see Blocked section).
 
 ## Next 3 deliverables (in order)
-1. **Fox model swap + animations** — Replace capsule placeholder with Quaternius
-   animal pack fox mesh (or Mixamo fox FBX). Wire idle/walk/run animation clips to
-   FoxAnimator states. Tag fox collider as "Fox". Test NavMesh walk in batch mode.
-   Commit + push.
+1. **Scene component wiring + NavMesh bake support** — Add FoxMeshBuilder and
+   ProceduralFoxAnimator components to Fox GameObject in TheHush.unity YAML directly
+   (no editor required — write the component YAML). Also attempt NavMesh data bake via
+   Unity batch mode (`-batchmode -executeMethod` with a custom Editor script that calls
+   NavMeshBuilder.BuildNavMesh). If batch bake fails, document the manual step clearly
+   and move on. Commit + push.
 2. **First TestFlight + internal-track Play build** — full biome loop:
    spawn → memory motes scattered → biome gate at end → reaching gate ends
    the loop with simple fade-out. Apple Developer + Google Play Console
@@ -88,10 +101,11 @@ under `art-reference/` — no longer the deliverable.
   Pixabay Music / Free Music Archive), OR Mike has a composer in mind?
 - **NavMesh bake**: one-time manual step — open Unity 2022.3 LTS → open TheHush scene
   → Window → AI → Navigation → Bake. Takes ~10 seconds. Required for fox movement.
-  Fox will compile and run without it but won't pathfind until baked.
-- **Fox model**: Quaternius animal pack may not include a fox. If not found at
-  unity/Assets/ThirdParty/Quaternius/, next cycle will fall back to a free Mixamo fox FBX
-  (rigged, with idle/walk/run clips). Confirm preference or let cron decide.
+  Fox will compile and run without it but won't pathfind until baked. (Next cycle will
+  attempt batch-mode bake first before escalating to manual.)
+- **Fox model**: ~~Quaternius animal pack may not include a fox~~ — RESOLVED: Quaternius
+  is nature-only. Procedural fox shipped (commit 24b0ec3). Real fox FBX can be swapped
+  in later by replacing FoxMeshBuilder with an FBX + SkinnedMeshRenderer — not blocking.
 - ~~Game name confirmation~~ — RESOLVED: "Lumen", repo = lumen-game, bundle id to be
   set in Unity Player Settings during deliverable #1 Unity setup
 
@@ -119,3 +133,4 @@ match is not required and would block delivery indefinitely.
 | 2026-05-05 | 2120311 | Unity project structure: Packages, ProjectSettings, URP pipeline assets, all 5 core C# scripts, TheHush scene stub |
 | 2026-05-06 | c61d7ac | TheHush scene wired: Fox+NavMeshAgent, WispLight, 10 MemoryMotes, BiomeGate, UI canvas, FoxAnimator controller, DaylightManager refs |
 | 2026-05-06 | d425434 | Scene dressing: 19 Quaternius props placed (trees/ferns/rocks/mushrooms), 11 FBX .meta files, NavMeshSurface on Ground, LumenVolumeProfile tuned (Bloom 0.8, vignette 0.35) |
+| 2026-05-06 | 24b0ec3 | Fox model v1: FoxMeshBuilder (11-part primitive rig), ProceduralFoxAnimator (trot gait/breathing/tail sway), FoxController wired, FoxAnimator.controller 1D blend tree |
