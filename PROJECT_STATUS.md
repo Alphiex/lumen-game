@@ -74,40 +74,42 @@ under `art-reference/` — no longer the deliverable.
       leg phase offset, tail sway, ear flick/perk). FoxController updated to drive proc
       animator. FoxAnimator.controller upgraded to 1D blend tree (Idle@0/Walk@1/Run@2) +
       LookAround state. **commit: 24b0ec3**
-      ⚠️ One manual step: open TheHush.unity in Unity → select Fox GameObject → Add
-      Component → FoxMeshBuilder + ProceduralFoxAnimator (both scripts auto-discover child
-      refs on Awake). NavMesh bake still needed too (see Blocked section).
+- [x] **Scene component wiring + NavMesh bake** — FoxMeshBuilder + ProceduralFoxAnimator
+      wired to Fox GameObject in TheHush.unity. NavMeshBaker.cs Editor script created
+      (Assets/Editor/); Unity batch-mode bake executed and **SUCCEEDED**: 1 NavMeshSurface
+      found on Ground, BuildNavMesh() called, scene saved with baked NavMeshData embedded
+      (scene 77KB → 256KB). Fox can now pathfind at runtime without any manual Unity Editor
+      step. 62 additional Quaternius .meta files + ProjectSettings finalized.
+      NavMesh bake blocked item RESOLVED. **commit: 99484c2**
 
 ## Next 3 deliverables (in order)
-1. **Scene component wiring + NavMesh bake support** — Add FoxMeshBuilder and
-   ProceduralFoxAnimator components to Fox GameObject in TheHush.unity YAML directly
-   (no editor required — write the component YAML). Also attempt NavMesh data bake via
-   Unity batch mode (`-batchmode -executeMethod` with a custom Editor script that calls
-   NavMeshBuilder.BuildNavMesh). If batch bake fails, document the manual step clearly
-   and move on. Commit + push.
+1. **Ambient audio wiring** — CC0 ambient music loop (Pixabay Music / Free Music
+   Archive) + 3-5 spatial SFX (wind, birds, mote-collect chime, gate-reach chime,
+   sigh). Wire to AudioSource / DaylightManager. Commit + push.
+   ⚠️ Needs Mike's OK: CC0 sources are the plan — confirm or name a preferred composer.
 2. **First TestFlight + internal-track Play build** — full biome loop:
    spawn → memory motes scattered → biome gate at end → reaching gate ends
    the loop with simple fade-out. Apple Developer + Google Play Console
    uploads. Mike opens build on physical device, plays through one loop,
    ships feedback in Telegram topic 400.
-3. **Ambient audio wiring** — CC0 ambient music loop (Pixabay Music / Free Music
-   Archive) + 3-5 spatial SFX (wind, birds, mote-collect chime, gate-reach chime,
-   sigh). Wire to AudioSource / DaylightManager. Commit + push.
+   ⚠️ BLOCKED on Apple Developer + Google Play Console access (see Blocked section).
+3. **Touch input polish + wisp visual** — Validate one-thumb input (hold → wisp appears
+   at finger, fox tracks; release → wisp dims, fox stops). Add glowing wisp orb mesh
+   (emissive material, point light child). Test in Unity Editor play mode. Commit + push.
 
 ## Blocked / decisions needed from Mike
 - Apple Developer account access for TestFlight upload (needed for deliverable #2)
 - Google Play Console access (one-time $25 dev account fee if not yet paid; needed for deliverable #2)
 - Music: ambient soundtrack OK to use Royalty-Free / CC0 sources (plan: CC0 via
   Pixabay Music / Free Music Archive), OR Mike has a composer in mind?
-- **NavMesh bake**: one-time manual step — open Unity 2022.3 LTS → open TheHush scene
-  → Window → AI → Navigation → Bake. Takes ~10 seconds. Required for fox movement.
-  Fox will compile and run without it but won't pathfind until baked. (Next cycle will
-  attempt batch-mode bake first before escalating to manual.)
+  (Needed for deliverable #1 — ambient audio wiring)
 - **Fox model**: ~~Quaternius animal pack may not include a fox~~ — RESOLVED: Quaternius
   is nature-only. Procedural fox shipped (commit 24b0ec3). Real fox FBX can be swapped
   in later by replacing FoxMeshBuilder with an FBX + SkinnedMeshRenderer — not blocking.
 - ~~Game name confirmation~~ — RESOLVED: "Lumen", repo = lumen-game, bundle id to be
   set in Unity Player Settings during deliverable #1 Unity setup
+- ~~NavMesh bake~~ — RESOLVED: batch-mode bake succeeded (commit 99484c2). No manual
+  Unity Editor step required.
 
 ## Out of scope for v1 (ruled out to prevent scope creep)
 - Multiple biomes — v1 ships ONE biome loop
@@ -134,3 +136,4 @@ match is not required and would block delivery indefinitely.
 | 2026-05-06 | c61d7ac | TheHush scene wired: Fox+NavMeshAgent, WispLight, 10 MemoryMotes, BiomeGate, UI canvas, FoxAnimator controller, DaylightManager refs |
 | 2026-05-06 | d425434 | Scene dressing: 19 Quaternius props placed (trees/ferns/rocks/mushrooms), 11 FBX .meta files, NavMeshSurface on Ground, LumenVolumeProfile tuned (Bloom 0.8, vignette 0.35) |
 | 2026-05-06 | 24b0ec3 | Fox model v1: FoxMeshBuilder (11-part primitive rig), ProceduralFoxAnimator (trot gait/breathing/tail sway), FoxController wired, FoxAnimator.controller 1D blend tree |
+| 2026-05-06 | 99484c2 | Scene wiring complete: FoxMeshBuilder+ProceduralFoxAnimator on Fox GameObject, NavMesh batch bake SUCCEEDED (1 surface, scene saved), 62 Quaternius .meta files, ProjectSettings finalized |
