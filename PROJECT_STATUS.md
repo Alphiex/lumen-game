@@ -92,30 +92,38 @@ under `art-reference/` — no longer the deliverable.
       snap-to-finger on press-down. TheHush.unity: WispMeshBuilder component wired to
       WispLight. Inspector knobs: tapPulseDuration, tapPulseScalePeak, tapPulseIntensity.
       **commit: 146b702**
+- [x] **MemoryMote visual orb + WebGL build configuration** — MemoryMoteVisualBuilder.cs:
+      [ExecuteAlways], builds "MoteOrb" child sphere (pale-gold HDR emissive, R=1.0 G=0.85
+      B=0.3 × 3.5 emission, scale 0.3f), bobs on local Y (Sin × 0.08f at 1.2Hz), OnDestroy
+      cleanup, ContextMenu rebuild. Wired to all 10 MemoryMote GOs in TheHush.unity
+      (fileIDs 7000000015…7000000105). WebGL: ProjectSettings updated (webGLMemorySize
+      512MB, webGLExceptionSupport 0, webGLPowerPreference 2=HighPerformance). New:
+      Assets/Editor/WebGLBuilder.cs (MenuItem + batch-mode executeMethod), scripts/
+      build-webgl.sh (auto-discovers Unity 2022.3.x binary, outputs to _builds/webgl/,
+      logs to build-webgl.log). .gitignore: added `_builds/`. **commit: 174b1d2**
 
 ## Next 3 deliverables (in order)
-1. **Ambient audio wiring** — CC0 ambient music loop (Pixabay Music / Free Music
+1. **WebGL build + GitHub Pages deploy** — run `scripts/build-webgl.sh` to produce
+   the _builds/webgl/ output. Copy build output to a `docs/` folder (or gh-pages
+   branch) and enable GitHub Pages on the lumen-game repo → shareable browser URL
+   so Mike can play without any device or dev-account setup. No blockers.
+   Note: requires Unity 2022.3 LTS to be installed at the standard Hub path.
+2. **Mote animation polish** — de-sync the 10 MemoryMotes' bob phase so they feel
+   organic rather than choreographed (add `_phaseOffset = siblingIndex * 0.41f` to
+   Awake, use it in Sin). Detune MemoryMoteVisualBuilder.bobHz to 0.7f (vs parent
+   MemoryMote.cs bob at 1.2f) to avoid resonant double-bob. Minor commit, big feel
+   improvement. No blockers.
+3. **Ambient audio wiring** — CC0 ambient music loop (Pixabay Music / Free Music
    Archive) + 3-5 spatial SFX (wind, birds, mote-collect chime, gate-reach chime,
    sigh). Wire to AudioSource / DaylightManager. Commit + push.
    ⚠️ BLOCKED: Needs Mike's OK on CC0 sources — confirm or name a preferred composer.
-2. **First TestFlight + internal-track Play build** — full biome loop:
-   spawn → memory motes scattered → biome gate at end → reaching gate ends
-   the loop with simple fade-out. Apple Developer + Google Play Console
-   uploads. Mike opens build on physical device, plays through one loop,
-   ships feedback in Telegram topic 400.
-   ⚠️ BLOCKED on Apple Developer + Google Play Console access (see Blocked section).
-3. **MemoryMote visual orb + WebGL playtest build** — Add emissive sphere mesh
-   to each MemoryMote GameObject (pattern: WispMeshBuilder; pale-gold emissive
-   color distinct from wisp cyan). Then configure Unity WebGL build target and
-   export a playable browser build — shareable URL, no developer accounts needed.
-   No blockers — can ship next cycle.
 
 ## Blocked / decisions needed from Mike
-- Apple Developer account access for TestFlight upload (needed for deliverable #2)
-- Google Play Console access (one-time $25 dev account fee if not yet paid; needed for deliverable #2)
+- Apple Developer account access for TestFlight upload (needed for deliverable: First TestFlight build)
+- Google Play Console access (one-time $25 dev account fee if not yet paid; needed for First Play build)
 - Music: ambient soundtrack OK to use Royalty-Free / CC0 sources (plan: CC0 via
   Pixabay Music / Free Music Archive), OR Mike has a composer in mind?
-  (Needed for deliverable #1 — ambient audio wiring)
+  (Needed for ambient audio wiring — Next 3 item #3)
 - **Fox model**: ~~Quaternius animal pack may not include a fox~~ — RESOLVED: Quaternius
   is nature-only. Procedural fox shipped (commit 24b0ec3). Real fox FBX can be swapped
   in later by replacing FoxMeshBuilder with an FBX + SkinnedMeshRenderer — not blocking.
@@ -152,3 +160,4 @@ match is not required and would block delivery indefinitely.
 | 2026-05-06 | 99484c2 | Scene wiring complete: FoxMeshBuilder+ProceduralFoxAnimator on Fox GameObject, NavMesh batch bake SUCCEEDED (1 surface, scene saved), 62 Quaternius .meta files, ProjectSettings finalized |
 | 2026-05-06 | eae54d8 | TheHush.unity YAML fix: NavMeshData stored externally, scene 33 GOs confirmed, text YAML verified |
 | 2026-05-06 | 146b702 | Touch input polish + wisp visual: WispMeshBuilder emissive orb, tap-vs-hold (0.15s), smooth dim, mesh toggle, TheHush.unity wired |
+| 2026-05-07 | 174b1d2 | MemoryMote emissive orb (pale-gold HDR × 3.5, 0.3f scale, bob) wired to 10 motes + WebGL build config: ProjectSettings 512MB, WebGLBuilder.cs, build-webgl.sh |
