@@ -2192,6 +2192,7 @@ GameObject:
   - component: {fileID: 7000000012}
   - component: {fileID: 7000000013}
   - component: {fileID: 7000000014}
+  - component: {fileID: 7000000015}
   m_Layer: 0
   m_Name: MemoryMote_1
   m_TagString: Untagged
@@ -2263,6 +2264,7 @@ GameObject:
   - component: {fileID: 7000000022}
   - component: {fileID: 7000000023}
   - component: {fileID: 7000000024}
+  - component: {fileID: 7000000025}
   m_Layer: 0
   m_Name: MemoryMote_2
   m_TagString: Untagged
@@ -2334,6 +2336,7 @@ GameObject:
   - component: {fileID: 7000000032}
   - component: {fileID: 7000000033}
   - component: {fileID: 7000000034}
+  - component: {fileID: 7000000035}
   m_Layer: 0
   m_Name: MemoryMote_3
   m_TagString: Untagged
@@ -2405,6 +2408,7 @@ GameObject:
   - component: {fileID: 7000000042}
   - component: {fileID: 7000000043}
   - component: {fileID: 7000000044}
+  - component: {fileID: 7000000045}
   m_Layer: 0
   m_Name: MemoryMote_4
   m_TagString: Untagged
@@ -2476,6 +2480,7 @@ GameObject:
   - component: {fileID: 7000000052}
   - component: {fileID: 7000000053}
   - component: {fileID: 7000000054}
+  - component: {fileID: 7000000055}
   m_Layer: 0
   m_Name: MemoryMote_5
   m_TagString: Untagged
@@ -2547,6 +2552,7 @@ GameObject:
   - component: {fileID: 7000000062}
   - component: {fileID: 7000000063}
   - component: {fileID: 7000000064}
+  - component: {fileID: 7000000065}
   m_Layer: 0
   m_Name: MemoryMote_6
   m_TagString: Untagged
@@ -2618,6 +2624,7 @@ GameObject:
   - component: {fileID: 7000000072}
   - component: {fileID: 7000000073}
   - component: {fileID: 7000000074}
+  - component: {fileID: 7000000075}
   m_Layer: 0
   m_Name: MemoryMote_7
   m_TagString: Untagged
@@ -2689,6 +2696,7 @@ GameObject:
   - component: {fileID: 7000000082}
   - component: {fileID: 7000000083}
   - component: {fileID: 7000000084}
+  - component: {fileID: 7000000085}
   m_Layer: 0
   m_Name: MemoryMote_8
   m_TagString: Untagged
@@ -2760,6 +2768,7 @@ GameObject:
   - component: {fileID: 7000000092}
   - component: {fileID: 7000000093}
   - component: {fileID: 7000000094}
+  - component: {fileID: 7000000095}
   m_Layer: 0
   m_Name: MemoryMote_9
   m_TagString: Untagged
@@ -2831,6 +2840,7 @@ GameObject:
   - component: {fileID: 7000000102}
   - component: {fileID: 7000000103}
   - component: {fileID: 7000000104}
+  - component: {fileID: 7000000105}
   m_Layer: 0
   m_Name: MemoryMote_10
   m_TagString: Untagged
@@ -4503,3 +4513,175 @@ MonoBehaviour:
   baseColor: {r: 0.722, g: 0.941, b: 1.0, a: 1.0}
   emissionIntensity: 2.5
   orbScale: 0.18
+
+# ─── MemoryMoteVisualBuilder on each mote (gold emissive orb + bob) ─────────
+--- !u!114 &7000000015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7000000011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4d5e6f78901abcdef3456789012345a, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  baseColor: {r: 1.0, g: 0.85, b: 0.3, a: 1.0}
+  emissionIntensity: 3.5
+  orbScale: 0.3
+  bobHz: 1.2
+  bobAmplitude: 0.08
+--- !u!114 &7000000025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7000000021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4d5e6f78901abcdef3456789012345a, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  baseColor: {r: 1.0, g: 0.85, b: 0.3, a: 1.0}
+  emissionIntensity: 3.5
+  orbScale: 0.3
+  bobHz: 1.2
+  bobAmplitude: 0.08
+--- !u!114 &7000000035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7000000031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4d5e6f78901abcdef3456789012345a, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  baseColor: {r: 1.0, g: 0.85, b: 0.3, a: 1.0}
+  emissionIntensity: 3.5
+  orbScale: 0.3
+  bobHz: 1.2
+  bobAmplitude: 0.08
+--- !u!114 &7000000045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7000000041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4d5e6f78901abcdef3456789012345a, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  baseColor: {r: 1.0, g: 0.85, b: 0.3, a: 1.0}
+  emissionIntensity: 3.5
+  orbScale: 0.3
+  bobHz: 1.2
+  bobAmplitude: 0.08
+--- !u!114 &7000000055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7000000051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4d5e6f78901abcdef3456789012345a, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  baseColor: {r: 1.0, g: 0.85, b: 0.3, a: 1.0}
+  emissionIntensity: 3.5
+  orbScale: 0.3
+  bobHz: 1.2
+  bobAmplitude: 0.08
+--- !u!114 &7000000065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7000000061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4d5e6f78901abcdef3456789012345a, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  baseColor: {r: 1.0, g: 0.85, b: 0.3, a: 1.0}
+  emissionIntensity: 3.5
+  orbScale: 0.3
+  bobHz: 1.2
+  bobAmplitude: 0.08
+--- !u!114 &7000000075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7000000071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4d5e6f78901abcdef3456789012345a, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  baseColor: {r: 1.0, g: 0.85, b: 0.3, a: 1.0}
+  emissionIntensity: 3.5
+  orbScale: 0.3
+  bobHz: 1.2
+  bobAmplitude: 0.08
+--- !u!114 &7000000085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7000000081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4d5e6f78901abcdef3456789012345a, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  baseColor: {r: 1.0, g: 0.85, b: 0.3, a: 1.0}
+  emissionIntensity: 3.5
+  orbScale: 0.3
+  bobHz: 1.2
+  bobAmplitude: 0.08
+--- !u!114 &7000000095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7000000091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4d5e6f78901abcdef3456789012345a, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  baseColor: {r: 1.0, g: 0.85, b: 0.3, a: 1.0}
+  emissionIntensity: 3.5
+  orbScale: 0.3
+  bobHz: 1.2
+  bobAmplitude: 0.08
+--- !u!114 &7000000105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7000000101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4d5e6f78901abcdef3456789012345a, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  baseColor: {r: 1.0, g: 0.85, b: 0.3, a: 1.0}
+  emissionIntensity: 3.5
+  orbScale: 0.3
+  bobHz: 1.2
+  bobAmplitude: 0.08
