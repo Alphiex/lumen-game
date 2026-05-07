@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Lumen — Atmospheric Spirit-Fox Explorer</title>
+  <meta name="description" content="An atmospheric one-thumb mobile exploration game. Guide a small spirit-fox through fog-shrouded biomes.">
+  <meta name="theme-color" content="#1a1410">
+  <link rel="canonical" href="https://alphiex.github.io/lumen-game/">
+  <style>
+    :root {
+      --bg-deep:   #0d0a08;
+      --bg-mid:    #1a1410;
+      --bg-card:   #221a14;
+      --amber:     #d4a566;
+      --amber-dim: #8a6d44;
+      --cream:     #e8d9c3;
+      --fog:       #2a2017;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100%;
+      background: var(--bg-deep);
+      color: var(--cream);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background:
+        radial-gradient(ellipse at top, var(--bg-mid) 0%, var(--bg-deep) 70%),
+        var(--bg-deep);
+    }
+    header {
+      padding: 2.5rem 1.5rem 1.5rem;
+      text-align: center;
+      border-bottom: 1px solid rgba(212, 165, 102, 0.15);
+    }
+    h1 {
+      font-size: clamp(2.5rem, 7vw, 4.5rem);
+      font-weight: 200;
+      letter-spacing: 0.18em;
+      color: var(--amber);
+      margin-bottom: 0.4rem;
+      text-shadow: 0 0 30px rgba(212, 165, 102, 0.25);
+    }
+    .tagline {
+      font-size: clamp(0.95rem, 2vw, 1.15rem);
+      color: var(--amber-dim);
+      letter-spacing: 0.08em;
+      font-style: italic;
+      max-width: 36rem;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    .status-banner {
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(212, 165, 102, 0.08) 50%,
+        transparent 100%);
+      border-top: 1px solid rgba(212, 165, 102, 0.12);
+      border-bottom: 1px solid rgba(212, 165, 102, 0.12);
+      padding: 0.75rem 1rem;
+      text-align: center;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      color: var(--amber-dim);
+    }
+    .status-banner strong { color: var(--amber); font-weight: 500; }
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem;
+      max-width: 1280px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .scene-section {
+      margin-bottom: 2rem;
+    }
+    .section-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--amber-dim);
+      margin-bottom: 0.5rem;
+      padding-left: 0.5rem;
+      border-left: 2px solid var(--amber);
+    }
+    .scene-frame {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border: 1px solid rgba(212, 165, 102, 0.2);
+      background: var(--fog);
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+    }
+    .scene-frame iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+    .scene-caption {
+      margin-top: 0.6rem;
+      font-size: 0.85rem;
+      color: var(--amber-dim);
+      line-height: 1.5;
+      max-width: 60rem;
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+      margin: 2rem 0 3rem;
+    }
+    .info-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(212, 165, 102, 0.1);
+      border-radius: 4px;
+      padding: 1.25rem 1.5rem;
+    }
+    .info-card h3 {
+      color: var(--amber);
+      font-size: 0.95rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+    }
+    .info-card p, .info-card li {
+      font-size: 0.9rem;
+      line-height: 1.55;
+      color: var(--cream);
+      opacity: 0.85;
+    }
+    .info-card ul { list-style: none; }
+    .info-card li { padding: 0.2rem 0; }
+    .info-card li::before {
+      content: '·';
+      color: var(--amber);
+      margin-right: 0.5rem;
+      font-weight: bold;
+    }
+    footer {
+      padding: 2rem 1.5rem 3rem;
+      text-align: center;
+      border-top: 1px solid rgba(212, 165, 102, 0.1);
+      font-size: 0.85rem;
+      color: var(--amber-dim);
+    }
+    footer a {
+      color: var(--amber);
+      text-decoration: none;
+      border-bottom: 1px dotted var(--amber-dim);
+      transition: opacity 0.15s;
+    }
+    footer a:hover { opacity: 0.7; }
+    .build-meta {
+      margin-top: 1rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+      color: rgba(212, 165, 102, 0.4);
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>LUMEN</h1>
+    <p class="tagline">
+      An atmospheric, one-thumb mobile exploration game.
+      Guide a small spirit-fox through fog-shrouded biomes,
+      lighting lanterns and chasing memories that dissolve at the edge of sight.
+    </p>
+  </header>
+
+  <div class="status-banner">
+    <strong>WebGL build coming soon</strong> &mdash; the page below is the Three.js art reference scene that the Unity build is calibrated against.
+  </div>
+
+  <main>
+    <section class="scene-section">
+      <div class="section-label">Art Reference Scene</div>
+      <div class="scene-frame">
+        <iframe src="scene.html" title="Lumen Three.js Art Reference" loading="lazy" allow="autoplay"></iframe>
+      </div>
+      <p class="scene-caption">
+        Interactive Three.js scene used as the lighting and atmosphere benchmark for the Unity URP build.
+        Click and drag to orbit; scroll to zoom. The Unity build matches this lighting key, fog density, bloom curve,
+        and color tone &mdash; rendered in real time on mobile and WebGL.
+      </p>
+    </section>
+
+    <section class="info-grid">
+      <div class="info-card">
+        <h3>Game</h3>
+        <ul>
+          <li>One-thumb touch &mdash; hold to summon, tap to ping</li>
+          <li>Spirit-fox tracks a wisp of light you control</li>
+          <li>Memory motes refill the daylight timer</li>
+          <li>No fail state &mdash; only quieter and louder moments</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>Tech</h3>
+        <ul>
+          <li>Unity 2022.3 LTS + Universal Render Pipeline</li>
+          <li>iOS &middot; Android &middot; WebGL</li>
+          <li>NavMesh AI &middot; Procedural mesh prototype</li>
+          <li>Quaternius low-poly nature pack</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>Status</h3>
+        <ul>
+          <li>Scene wired with fox, motes, gate, UI</li>
+          <li>NavMesh baked, fox follows wisp</li>
+          <li>URP volume tuned (bloom, vignette, tonemap)</li>
+          <li>WebGL build module pending install</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      Built with care &middot;
+      <a href="https://github.com/Alphiex/lumen-game" target="_blank" rel="noopener">github.com/Alphiex/lumen-game</a>
+    </p>
+    <p class="build-meta">deployed via GitHub Pages from /docs &middot; main branch</p>
+  </footer>
+</body>
+</html>
