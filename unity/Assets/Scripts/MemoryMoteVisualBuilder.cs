@@ -22,7 +22,7 @@ public class MemoryMoteVisualBuilder : MonoBehaviour
 
     [Header("Bob")]
     [Tooltip("Cycles per second of the local-Y bob.")]
-    public float bobHz = 1.2f;
+    public float bobHz = 0.7f;
 
     [Tooltip("Vertical amplitude of the bob in world units.")]
     public float bobAmplitude = 0.08f;
@@ -32,9 +32,13 @@ public class MemoryMoteVisualBuilder : MonoBehaviour
     Material _emissiveMat;
     Transform _orb;
     float _orbBaseY;
+    float _phaseOffset;
 
     void Awake()
     {
+        // Stagger each mote's bob phase so all 10 don't rise/fall in unison.
+        // siblingIndex × 0.41 rad ≈ golden-angle-ish spread across 2π for 10 motes.
+        _phaseOffset = transform.GetSiblingIndex() * 0.41f;
         EnsureBuilt();
     }
 
@@ -54,7 +58,7 @@ public class MemoryMoteVisualBuilder : MonoBehaviour
     void Update()
     {
         if (_orb == null) return;
-        float dy = Mathf.Sin(Time.time * bobHz * Mathf.PI * 2f) * bobAmplitude;
+        float dy = Mathf.Sin(Time.time * bobHz * Mathf.PI * 2f + _phaseOffset) * bobAmplitude;
         _orb.localPosition = new Vector3(0f, _orbBaseY + dy, 0f);
     }
 
