@@ -108,30 +108,35 @@ under `art-reference/` — no longer the deliverable.
       Unity WebGL Build Support module not installed — build infra (WebGLBuilder.cs,
       build-webgl.sh) ready; swap with `cp -r _builds/webgl/* docs/` once module installed.
       **commit: 0a91c0f**
+- [x] **Mote animation polish** — Phase-staggered 10 MemoryMotes' bob using
+      `_phaseOffset = transform.GetSiblingIndex() * 0.41f` (golden-angle-ish spread
+      across 10 siblings). Detuned MemoryMoteVisualBuilder.bobHz 1.2→0.7f to eliminate
+      resonant double-bob with parent MemoryMote.cs. Motes now bob organically, each
+      at its own rhythm. 1 file changed, 6 insertions. **commit: 6672ac3**
 
 ## Next 3 deliverables (in order)
-1. **Mote animation polish** — de-sync the 10 MemoryMotes' bob phase so they feel
-   organic rather than choreographed (add `_phaseOffset = siblingIndex * 0.41f` to
-   Awake, use it in Sin). Detune MemoryMoteVisualBuilder.bobHz to 0.7f (vs parent
-   MemoryMote.cs bob at 1.2f) to avoid resonant double-bob. Minor commit, big feel
-   improvement. No blockers.
-2. **Unity WebGL Build Support install + real WebGL build** — Install WebGL Build
+1. **Unity WebGL Build Support install + real WebGL build** — Install WebGL Build
    Support module via Unity Hub (2022.3.62f3 → ⋮ → Add modules → WebGL Build Support,
    ~700MB download). Then run `scripts/build-webgl.sh`, copy output to docs/, commit
    + push. Pages auto-redeploys. Mike gets a real playable browser build.
    ⚠️ BLOCKED: Requires manual Unity Hub GUI action to install the module. Can Claude
    automate via Unity Hub CLI? Worth checking — otherwise needs Mike to run it once.
-3. **Ambient audio wiring** — CC0 ambient music loop (Pixabay Music / Free Music
+2. **Ambient audio wiring** — CC0 ambient music loop (Pixabay Music / Free Music
    Archive) + 3-5 spatial SFX (wind, birds, mote-collect chime, gate-reach chime,
    sigh). Wire to AudioSource / DaylightManager. Commit + push.
    ⚠️ BLOCKED: Needs Mike's OK on CC0 sources — confirm or name a preferred composer.
+3. **BiomeGate visual builder** — `BiomeGateVisualBuilder.cs` [ExecuteAlways], builds
+   a warm-gold HDR emissive arch effect around the gate (point light + emissive child
+   sphere cluster framing the gate pillars), plus a proximity pulse when the fox enters
+   ~20m radius (light intensity spike coroutine). Makes the goal unmistakably visible
+   from scene start. Mirrors MemoryMoteVisualBuilder pattern. No external blockers.
 
 ## Blocked / decisions needed from Mike
 - Apple Developer account access for TestFlight upload (needed for deliverable: First TestFlight build)
 - Google Play Console access (one-time $25 dev account fee if not yet paid; needed for First Play build)
 - Music: ambient soundtrack OK to use Royalty-Free / CC0 sources (plan: CC0 via
   Pixabay Music / Free Music Archive), OR Mike has a composer in mind?
-  (Needed for ambient audio wiring — Next 3 item #3)
+  (Needed for ambient audio wiring — Next 3 item #2)
 - **Unity WebGL Build Support module**: needs Unity Hub GUI install (2022.3.62f3 → Add modules
   → WebGL Build Support). One-time ~700MB download. All build infra is ready; this is the only
   missing piece to get a real playable browser build live. Can Mike install this once?
@@ -170,6 +175,7 @@ match is not required and would block delivery indefinitely.
 | 2026-05-06 | 24b0ec3 | Fox model v1: FoxMeshBuilder (11-part primitive rig), ProceduralFoxAnimator (trot gait/breathing/tail sway), FoxController wired, FoxAnimator.controller 1D blend tree |
 | 2026-05-06 | 99484c2 | Scene wiring complete: FoxMeshBuilder+ProceduralFoxAnimator on Fox GameObject, NavMesh batch bake SUCCEEDED (1 surface, scene saved), 62 Quaternius .meta files, ProjectSettings finalized |
 | 2026-05-06 | eae54d8 | TheHush.unity YAML fix: NavMeshData stored externally, scene 33 GOs confirmed, text YAML verified |
-| 2026-05-06 | 146b702 | Touch input polish + wisp visual: WispMeshBuilder emissive orb, tap-vs-hold (0.15s), smooth dim, mesh toggle, TheHush.unity wired |
+| 2026-05-06 | 146b702 | Touch input polish + wisp visual: WispMeshBuilder emissive orb, tap-vs-hold (0.15s), smooth dim on release |
 | 2026-05-07 | 174b1d2 | MemoryMote emissive orb (pale-gold HDR × 3.5, 0.3f scale, bob) wired to 10 motes + WebGL build config: ProjectSettings 512MB, WebGLBuilder.cs, build-webgl.sh |
 | 2026-05-07 | 0a91c0f | GitHub Pages deploy: docs/index.html (branded landing, iframed Three.js scene), GitHub Pages enabled via API, live at https://alphiex.github.io/lumen-game/ |
+| 2026-05-08 | 6672ac3 | Mote animation polish: phase-stagger 10 orbs (siblingIndex × 0.41 rad), bobHz 1.2→0.7f — organic feel, no resonant sync |
