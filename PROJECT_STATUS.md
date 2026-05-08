@@ -113,6 +113,13 @@ under `art-reference/` — no longer the deliverable.
       across 10 siblings). Detuned MemoryMoteVisualBuilder.bobHz 1.2→0.7f to eliminate
       resonant double-bob with parent MemoryMote.cs. Motes now bob organically, each
       at its own rhythm. 1 file changed, 6 insertions. **commit: 6672ac3**
+- [x] **BiomeGate visual builder** — BiomeGateVisualBuilder.cs [ExecuteAlways]: 4 warm-gold
+      HDR emissive sphere pillars arranged in rectangular henge (x=±4, y=±1, scale 0.4f,
+      R=1.0 G=0.7 B=0.2 × 4.0 emission), GateLight PointLight child (warm gold, range=12,
+      intensity=1.8). ProximityPulse coroutine fires when fox enters 20m radius: intensity
+      spikes 1.8→5.4 over 0.2s then fades back over 0.6s. Hysteresis at 1.3× radius
+      prevents flicker. Wired to BiomeGate GO in TheHush.unity. Coexists with existing
+      attention-pulse light on BiomeGate root. **commit: ed1c5ca**
 
 ## Next 3 deliverables (in order)
 1. **Unity WebGL Build Support install + real WebGL build** — Install WebGL Build
@@ -125,11 +132,12 @@ under `art-reference/` — no longer the deliverable.
    Archive) + 3-5 spatial SFX (wind, birds, mote-collect chime, gate-reach chime,
    sigh). Wire to AudioSource / DaylightManager. Commit + push.
    ⚠️ BLOCKED: Needs Mike's OK on CC0 sources — confirm or name a preferred composer.
-3. **BiomeGate visual builder** — `BiomeGateVisualBuilder.cs` [ExecuteAlways], builds
-   a warm-gold HDR emissive arch effect around the gate (point light + emissive child
-   sphere cluster framing the gate pillars), plus a proximity pulse when the fox enters
-   ~20m radius (light intensity spike coroutine). Makes the goal unmistakably visible
-   from scene start. Mirrors MemoryMoteVisualBuilder pattern. No external blockers.
+3. **Daylight UI polish + outcome sequence** — DaylightSlider gradient upgrade:
+   amber (#F5A623) at full → cool blue (#4A90D9) when depleted, updated each frame
+   via Slider's fillRect Image.color. Add urgency pulse (CanvasGroup alpha oscillation
+   at 2Hz) when daylight < 20%. Polish outcome sequence timing: fade-to-black 0.8s,
+   text fade-in 0.5s (alpha tween on OutcomeText), hold 3s, fade-out + scene restart.
+   DaylightManager.cs changes only. No external blockers.
 
 ## Blocked / decisions needed from Mike
 - Apple Developer account access for TestFlight upload (needed for deliverable: First TestFlight build)
@@ -179,3 +187,4 @@ match is not required and would block delivery indefinitely.
 | 2026-05-07 | 174b1d2 | MemoryMote emissive orb (pale-gold HDR × 3.5, 0.3f scale, bob) wired to 10 motes + WebGL build config: ProjectSettings 512MB, WebGLBuilder.cs, build-webgl.sh |
 | 2026-05-07 | 0a91c0f | GitHub Pages deploy: docs/index.html (branded landing, iframed Three.js scene), GitHub Pages enabled via API, live at https://alphiex.github.io/lumen-game/ |
 | 2026-05-08 | 6672ac3 | Mote animation polish: phase-stagger 10 orbs (siblingIndex × 0.41 rad), bobHz 1.2→0.7f — organic feel, no resonant sync |
+| 2026-05-08 | ed1c5ca | BiomeGate visual builder: 4 warm-gold HDR emissive pillar spheres + GateLight PointLight + ProximityPulse coroutine (1.8→5.4 intensity, 20m radius, hysteresis 1.3×) wired to BiomeGate in TheHush.unity |
