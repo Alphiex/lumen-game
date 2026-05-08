@@ -128,6 +128,16 @@ under `art-reference/` — no longer the deliverable.
       outcome text fades in over 0.5s via auto-attached CanvasGroup, hold 3s, fade-out
       0.5s then scene reload. DaylightManager.cs only, 1 file changed +39/-9 lines.
       **commit: 61a2b28**
+- [x] **Mote collect VFX + gameplay feedback polish** — WispController.cs: static Instance
+      singleton + OnMoteCollected() public method; MoteCollectGlowRoutine spikes PointLight
+      0→3.0 over 0.05s, fades back to resting over 0.25s (handles wisp-was-inactive case).
+      DaylightManager.cs: moteCollectOverlay CanvasGroup ref + FlashMoteCollect() method;
+      MoteCollectFlashRoutine fades pale-gold overlay 0→0.15 over 0.05s, back to 0 over
+      0.3s. MemoryMote.cs: OnCollect now fires WispController.OnMoteCollected() +
+      DaylightManager.FlashMoteCollect() + BurstAndDestroy coroutine (MoteOrb scales
+      1×→2.5× over 0.1s then Destroy). TheHush.unity: MoteCollectOverlay added to
+      UICanvas (full-screen pale-gold Image, CanvasGroup alpha=0, raycastTarget off),
+      wired to DaylightManager. 4 files, 174 insertions. **commit: 6fdb17d**
 
 ## Next 3 deliverables (in order)
 1. **Unity WebGL Build Support install + real WebGL build** — Install WebGL Build
@@ -140,14 +150,12 @@ under `art-reference/` — no longer the deliverable.
    Archive) + 3-5 spatial SFX (wind, birds, mote-collect chime, gate-reach chime,
    sigh). Wire to AudioSource / DaylightManager. Commit + push.
    ⚠️ BLOCKED: Needs Mike's OK on CC0 sources — confirm or name a preferred composer.
-3. **Mote collect VFX + gameplay feedback polish** — When fox collects a MemoryMote,
-   add a satisfying visual pop: MemoryMote.cs emits a brief burst at the collection
-   point (scale the MoteOrb to 0→2.5× over 0.1s then destroy; flash a brief pale-gold
-   screen-space highlight via a CanvasGroup full-screen panel that goes 0→0.15 alpha
-   then fades over 0.3s). Also: fox emits a faint white HDR glow burst on WispController
-   when mote collected (light intensity spike 0→3.0 over 0.05s, fades over 0.25s).
-   No new assets — all procedural from existing emissive materials + URP lights.
-   No external blockers.
+3. **Procedural SFX chimes (no external assets)** — Generate short synthetic AudioClips
+   in C# using AudioClip.Create() with sine wave math: mote-collect chime (C5-E5-G5
+   major chord, 0.4s decay), gate-reach chime (warmer longer tone, 1.2s), optional
+   ambient wind texture (low-freq Perlin-modulated loop). Wire to MemoryMote.cs
+   OnCollect, BiomeGate proximity trigger, and an AudioSource on the main camera.
+   No CC0 approval needed — purely code-generated audio. No external blockers.
 
 ## Blocked / decisions needed from Mike
 - Apple Developer account access for TestFlight upload (needed for deliverable: First TestFlight build)
@@ -196,6 +204,7 @@ match is not required and would block delivery indefinitely.
 | 2026-05-06 | 146b702 | Touch input polish + wisp visual: WispMeshBuilder emissive orb, tap-vs-hold (0.15s), smooth dim on release |
 | 2026-05-07 | 174b1d2 | MemoryMote emissive orb (pale-gold HDR × 3.5, 0.3f scale, bob) wired to 10 motes + WebGL build config: ProjectSettings 512MB, WebGLBuilder.cs, build-webgl.sh |
 | 2026-05-07 | 0a91c0f | GitHub Pages deploy: docs/index.html (branded landing, iframed Three.js scene), GitHub Pages enabled via API, live at https://alphiex.github.io/lumen-game/ |
-| 2026-05-08 | 6672ac3 | Mote animation polish: phase-stagger 10 orbs (siblingIndex × 0.41 rad), bobHz 1.2→0.7f — organic feel, no resonant sync |
+| 2026-05-08 | 6672ac3 | Mote animation polish: phase-stagger 10 orbs (siblingIndex × 0.41 rad), detune bobHz 1.2→0.7f — organic feel, no resonant sync |
 | 2026-05-08 | ed1c5ca | BiomeGate visual builder: 4 warm-gold HDR emissive pillar spheres + GateLight PointLight + ProximityPulse coroutine (1.8→5.4 intensity, 20m radius, hysteresis 1.3×) wired to BiomeGate in TheHush.unity |
 | 2026-05-08 | 61a2b28 | Daylight UI polish: slider gradient (amber→blue), urgency pulse <20% at 2Hz, outcome sequence retimed (0.8s fade, 0.5s text fade-in, 3s hold, 0.5s fade-out) |
+| 2026-05-08 | 6fdb17d | Mote collect VFX: WispController glow spike (0→3.0 over 0.05s, fades 0.25s), DaylightManager pale-gold screen flash (0→0.15 over 0.05s, fades 0.3s), MemoryMote burst scale (1×→2.5× over 0.1s then Destroy), MoteCollectOverlay added to UICanvas |
