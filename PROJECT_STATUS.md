@@ -120,6 +120,14 @@ under `art-reference/` — no longer the deliverable.
       spikes 1.8→5.4 over 0.2s then fades back over 0.6s. Hysteresis at 1.3× radius
       prevents flicker. Wired to BiomeGate GO in TheHush.unity. Coexists with existing
       attention-pulse light on BiomeGate root. **commit: ed1c5ca**
+- [x] **Daylight UI polish + outcome sequence** — DaylightManager.cs: (1) Slider fill
+      color gradient: amber (#F5A623) at full daylight → cool blue (#4A90D9) when depleted,
+      lerped per-frame via fillRect Image.color. (2) Urgency pulse: when daylight < 20%,
+      slider CanvasGroup.alpha oscillates at 2 Hz (0.7 + 0.3·sin) — visible heartbeat
+      of remaining time. (3) Outcome sequence retimed: fade-to-black 0.8s (was 1.5s),
+      outcome text fades in over 0.5s via auto-attached CanvasGroup, hold 3s, fade-out
+      0.5s then scene reload. DaylightManager.cs only, 1 file changed +39/-9 lines.
+      **commit: 61a2b28**
 
 ## Next 3 deliverables (in order)
 1. **Unity WebGL Build Support install + real WebGL build** — Install WebGL Build
@@ -132,12 +140,14 @@ under `art-reference/` — no longer the deliverable.
    Archive) + 3-5 spatial SFX (wind, birds, mote-collect chime, gate-reach chime,
    sigh). Wire to AudioSource / DaylightManager. Commit + push.
    ⚠️ BLOCKED: Needs Mike's OK on CC0 sources — confirm or name a preferred composer.
-3. **Daylight UI polish + outcome sequence** — DaylightSlider gradient upgrade:
-   amber (#F5A623) at full → cool blue (#4A90D9) when depleted, updated each frame
-   via Slider's fillRect Image.color. Add urgency pulse (CanvasGroup alpha oscillation
-   at 2Hz) when daylight < 20%. Polish outcome sequence timing: fade-to-black 0.8s,
-   text fade-in 0.5s (alpha tween on OutcomeText), hold 3s, fade-out + scene restart.
-   DaylightManager.cs changes only. No external blockers.
+3. **Mote collect VFX + gameplay feedback polish** — When fox collects a MemoryMote,
+   add a satisfying visual pop: MemoryMote.cs emits a brief burst at the collection
+   point (scale the MoteOrb to 0→2.5× over 0.1s then destroy; flash a brief pale-gold
+   screen-space highlight via a CanvasGroup full-screen panel that goes 0→0.15 alpha
+   then fades over 0.3s). Also: fox emits a faint white HDR glow burst on WispController
+   when mote collected (light intensity spike 0→3.0 over 0.05s, fades over 0.25s).
+   No new assets — all procedural from existing emissive materials + URP lights.
+   No external blockers.
 
 ## Blocked / decisions needed from Mike
 - Apple Developer account access for TestFlight upload (needed for deliverable: First TestFlight build)
@@ -188,3 +198,4 @@ match is not required and would block delivery indefinitely.
 | 2026-05-07 | 0a91c0f | GitHub Pages deploy: docs/index.html (branded landing, iframed Three.js scene), GitHub Pages enabled via API, live at https://alphiex.github.io/lumen-game/ |
 | 2026-05-08 | 6672ac3 | Mote animation polish: phase-stagger 10 orbs (siblingIndex × 0.41 rad), bobHz 1.2→0.7f — organic feel, no resonant sync |
 | 2026-05-08 | ed1c5ca | BiomeGate visual builder: 4 warm-gold HDR emissive pillar spheres + GateLight PointLight + ProximityPulse coroutine (1.8→5.4 intensity, 20m radius, hysteresis 1.3×) wired to BiomeGate in TheHush.unity |
+| 2026-05-08 | 61a2b28 | Daylight UI polish: slider gradient (amber→blue), urgency pulse <20% at 2Hz, outcome sequence retimed (0.8s fade, 0.5s text fade-in, 3s hold, 0.5s fade-out) |
