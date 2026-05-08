@@ -14,6 +14,8 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Light))]
 public class WispController : MonoBehaviour
 {
+    public static WispController Instance { get; private set; }
+
     [Header("Wisp Settings")]
     public float wispHeight     = 0.4f;
     public float followSpeed    = 12f;
@@ -54,6 +56,7 @@ public class WispController : MonoBehaviour
 
     void Awake()
     {
+        Instance = this;
         _light = GetComponent<Light>();
         _baseIntensity = _light.intensity;
         _meshBuilder = GetComponent<WispMeshBuilder>();
@@ -285,5 +288,48 @@ public class WispController : MonoBehaviour
         SetActiveVisual(false);
         _light.intensity = _baseIntensity; // restore for next show
         _activeRoutine = null;
+    }
+
+    /// <summary>
+    /// Called by MemoryMote when the fox collects it — spike the wisp's light
+    /// briefly to celebrate the pickup. Total duration ~0.3s.
+    /// </summary>
+    public void OnMoteCollected()
+    {
+        StartCoroutine(MoteCollectGlowRoutine());
+    }
+
+    IEnumerator MoteCollectGlowRoutine()
+    {
+        const float spikeDuration = 0.05f;
+        const float fadeDuration  = 0.25f;
+        const float peakIntensity = 3.0f;
+
+        float restingIntensity = _isActive ? _light.intensity : _baseIntensity;
+        // Make sure the light is on for the spike, even if the wisp wasn't visible.
+        _light.enabled = true;
+
+        // Spike up — fast 0 → 3.0 (snap onto the peak from current).
+        float t = 0f;
+        float startI = _light.intensity;
+        while (t < spikeDuration)
+        {
+            t += Time.deltaTime;
+            _light.intensity = Mathf.Lerp(startI, peakIntensity, t / spikeDuration);
+            yield return null;
+        }
+        _light.intensity = peakIntensity;
+
+        // Fade back to resting (or 0 if the wisp wasn't active when collect fired).
+        float endI = _isActive ? restingIntensity : 0f;
+        t = 0f;
+        while (t < fadeDuration)
+        {
+            t += Time.deltaTime;
+            _light.intensity = Mathf.Lerp(peakIntensity, endI, t / fadeDuration);
+            yield return null;
+        }
+        _light.intensity = endI;
+        if (!_isActive) _light.enabled = false;
     }
 }

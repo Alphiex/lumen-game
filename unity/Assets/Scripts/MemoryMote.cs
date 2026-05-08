@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -48,6 +49,11 @@ public class MemoryMote : MonoBehaviour
     {
         DaylightManager.Instance?.AddTime(daylightRefill);
 
+        // Wisp glow spike + screen flash — owned by other GameObjects, so they
+        // keep running even after this mote is destroyed.
+        WispController.Instance?.OnMoteCollected();
+        DaylightManager.Instance?.FlashMoteCollect();
+
         // Play burst particles detached so they survive after we disable
         if (collectBurst)
         {
@@ -62,6 +68,27 @@ public class MemoryMote : MonoBehaviour
             AudioSource.PlayClipAtPoint(collectChime, transform.position);
         }
 
-        gameObject.SetActive(false);
+        // Burst-scale the MoteOrb child, then destroy this GameObject.
+        StartCoroutine(BurstAndDestroy());
+    }
+
+    IEnumerator BurstAndDestroy()
+    {
+        const float burstDuration = 0.1f;
+        const float burstScalePeak = 2.5f;
+
+        var orb = transform.Find("MoteOrb");
+        Vector3 orbStartScale = (orb != null) ? orb.localScale : Vector3.one;
+
+        float t = 0f;
+        while (t < burstDuration)
+        {
+            t += Time.deltaTime;
+            float k = Mathf.Clamp01(t / burstDuration);
+            if (orb != null) orb.localScale = orbStartScale * Mathf.Lerp(1f, burstScalePeak, k);
+            yield return null;
+        }
+
+        Destroy(gameObject);
     }
 }

@@ -19,6 +19,8 @@ public class DaylightManager : MonoBehaviour
     public Slider daylightSlider;
     public TextMeshProUGUI outcomeText;
     public CanvasGroup fadeOverlay;
+    [Tooltip("Pale-gold full-screen flash shown briefly when a mote is collected.")]
+    public CanvasGroup moteCollectOverlay;
 
     [Header("Audio")]
     public AudioSource audioSource;
@@ -86,6 +88,40 @@ public class DaylightManager : MonoBehaviour
         UpdateSlider();
         if (audioSource && moteCollectChime)
             audioSource.PlayOneShot(moteCollectChime);
+    }
+
+    /// <summary>Pale-gold screen flash on mote collect: 0→0.15 alpha in 0.05s, then fade back over 0.3s.</summary>
+    public void FlashMoteCollect()
+    {
+        if (moteCollectOverlay == null) return;
+        StartCoroutine(MoteCollectFlashRoutine());
+    }
+
+    System.Collections.IEnumerator MoteCollectFlashRoutine()
+    {
+        const float riseDuration = 0.05f;
+        const float fadeDuration = 0.30f;
+        const float peakAlpha    = 0.15f;
+
+        // Rise — fast spike to peak.
+        float t = 0f;
+        while (t < riseDuration)
+        {
+            t += Time.deltaTime;
+            moteCollectOverlay.alpha = Mathf.Lerp(0f, peakAlpha, t / riseDuration);
+            yield return null;
+        }
+        moteCollectOverlay.alpha = peakAlpha;
+
+        // Fade back to invisible.
+        t = 0f;
+        while (t < fadeDuration)
+        {
+            t += Time.deltaTime;
+            moteCollectOverlay.alpha = Mathf.Lerp(peakAlpha, 0f, t / fadeDuration);
+            yield return null;
+        }
+        moteCollectOverlay.alpha = 0f;
     }
 
     /// <summary>Fox reached the biome gate — success loop.</summary>
