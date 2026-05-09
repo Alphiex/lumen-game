@@ -23,13 +23,14 @@ lines). This was visual-quality iteration without a playable loop, no input
 handling, no state machine. The shader work is preserved as art reference
 under `art-reference/` — no longer the deliverable.
 
-## Status snapshot (2026-05-07)
+## Status snapshot (2026-05-08)
 - Git: INITIALIZED — github.com/Alphiex/lumen-game (main branch, push confirmed)
 - Stack: Unity (URP) on mobile + WebGL (URP scales to both)
 - Existing assets: Quaternius low-poly nature pack at `unity/Assets/ThirdParty/`
 - Existing art reference: 7 captured screenshots + scene.html in `art-reference/`
 - GitHub Pages: LIVE at https://alphiex.github.io/lumen-game/ (source: main /docs)
 - Unity WebGL Build Support module: NOT YET INSTALLED (needs Unity Hub → 2022.3.62f3 → Add modules → WebGL Build Support ~700MB). Build infra ready; just needs the module.
+- Audio: procedurally synthesized — no external sample files. Chimes + wind loop generated in C# at runtime.
 
 ## Done
 - [x] Three.js commercial scene with 280-pass post-processing pipeline (now art reference)
@@ -138,6 +139,19 @@ under `art-reference/` — no longer the deliverable.
       1×→2.5× over 0.1s then Destroy). TheHush.unity: MoteCollectOverlay added to
       UICanvas (full-screen pale-gold Image, CanvasGroup alpha=0, raycastTarget off),
       wired to DaylightManager. 4 files, 174 insertions. **commit: 6fdb17d**
+- [x] **Procedural SFX chimes** — ProceduralAudio.cs: static utility with (1)
+      GenerateChord(frequencies, duration) — sum-of-sines bell synthesis with exponential
+      decay envelope (-43 dB tail) + 64-sample linear attack ramp to suppress click;
+      (2) GenerateWindLoop(duration) — LCG noise hold-and-interpolate (kHoldRate=100 ≈
+      441 Hz cutoff "rumble") modulated by dual-LFO gust (0.5 Hz + 1.7 Hz) with edge
+      cross-fade for seamless wrap. ProceduralAudioManager.cs: [ExecuteAlways] singleton,
+      lazy-generates moteChime (C5-E5-G5 major triad, 0.4s), gateChime (C4-E4-G4-C5
+      warmer voicing, 1.2s), windLoop (8s ambient). Auto-adds AudioSources if missing.
+      Public API: PlayMoteChime, PlayGateChime, StartWind. BiomeGateAudio.cs: trigger
+      sibling on BiomeGate, plays gate chime when fox enters (one-shot guarded by
+      _played flag). MemoryMote.Collect() wired to ProceduralAudioManager.PlayMoteChime().
+      TheHush.unity: AudioManager GameObject added, BiomeGateAudio component on BiomeGate.
+      8 files, 368 insertions. No external audio assets. **commit: 3a7f24b**
 
 ## Next 3 deliverables (in order)
 1. **Unity WebGL Build Support install + real WebGL build** — Install WebGL Build
@@ -150,12 +164,15 @@ under `art-reference/` — no longer the deliverable.
    Archive) + 3-5 spatial SFX (wind, birds, mote-collect chime, gate-reach chime,
    sigh). Wire to AudioSource / DaylightManager. Commit + push.
    ⚠️ BLOCKED: Needs Mike's OK on CC0 sources — confirm or name a preferred composer.
-3. **Procedural SFX chimes (no external assets)** — Generate short synthetic AudioClips
-   in C# using AudioClip.Create() with sine wave math: mote-collect chime (C5-E5-G5
-   major chord, 0.4s decay), gate-reach chime (warmer longer tone, 1.2s), optional
-   ambient wind texture (low-freq Perlin-modulated loop). Wire to MemoryMote.cs
-   OnCollect, BiomeGate proximity trigger, and an AudioSource on the main camera.
-   No CC0 approval needed — purely code-generated audio. No external blockers.
+   Note: procedural SFX chimes (commit 3a7f24b) cover mote/gate/wind already; this
+   step is for richer-feel music + bird/sigh layers if desired.
+3. **Camera follow + fox-anchored framing** — Currently the camera is static at
+   (0, 6, -12) looking down the corridor; the fox runs out-of-frame on long pulls.
+   Add a CameraFollow.cs script: smooth-damp the camera to stay (offsetX=0,
+   offsetY=4, offsetZ=-8) behind the fox in world-Z space, with optional "look-back"
+   when the fox decelerates. Cinemachine 2.9.7 is already in the manifest — could
+   alternatively wire a CinemachineVirtualCamera with a Body=Transposer + Aim=
+   Composer for a built-in solution. Commit + push.
 
 ## Blocked / decisions needed from Mike
 - Apple Developer account access for TestFlight upload (needed for deliverable: First TestFlight build)
@@ -173,6 +190,8 @@ under `art-reference/` — no longer the deliverable.
   set in Unity Player Settings during deliverable #1 Unity setup
 - ~~NavMesh bake~~ — RESOLVED: batch-mode bake succeeded (commit 99484c2). No manual
   Unity Editor step required.
+- ~~Mote/gate/wind audio~~ — RESOLVED: procedural SFX shipped (commit 3a7f24b). No
+  external audio assets needed for v1 baseline; can layer richer music in deliverable #2.
 
 ## Out of scope for v1 (ruled out to prevent scope creep)
 - Multiple biomes — v1 ships ONE biome loop
@@ -208,3 +227,4 @@ match is not required and would block delivery indefinitely.
 | 2026-05-08 | ed1c5ca | BiomeGate visual builder: 4 warm-gold HDR emissive pillar spheres + GateLight PointLight + ProximityPulse coroutine (1.8→5.4 intensity, 20m radius, hysteresis 1.3×) wired to BiomeGate in TheHush.unity |
 | 2026-05-08 | 61a2b28 | Daylight UI polish: slider gradient (amber→blue), urgency pulse <20% at 2Hz, outcome sequence retimed (0.8s fade, 0.5s text fade-in, 3s hold, 0.5s fade-out) |
 | 2026-05-08 | 6fdb17d | Mote collect VFX: WispController glow spike (0→3.0 over 0.05s, fades 0.25s), DaylightManager pale-gold screen flash (0→0.15 over 0.05s, fades 0.3s), MemoryMote burst scale (1×→2.5× over 0.1s then Destroy), MoteCollectOverlay added to UICanvas |
+| 2026-05-08 | 3a7f24b | Procedural SFX chimes: ProceduralAudio (sum-of-sines chord + LCG wind loop), ProceduralAudioManager singleton (mote C5-E5-G5 0.4s, gate C4-E4-G4-C5 1.2s, 8s seamless wind), BiomeGateAudio trigger, MemoryMote wired — no external audio assets |
