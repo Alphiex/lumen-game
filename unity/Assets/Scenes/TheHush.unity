@@ -2080,6 +2080,7 @@ GameObject:
   - component: {fileID: 6000000003}
   - component: {fileID: 6000000004}
   - component: {fileID: 6000000005}
+  - component: {fileID: 6000000006}
   m_Layer: 0
   m_Name: WispLight
   m_TagString: Untagged
@@ -4866,3 +4867,23 @@ MonoBehaviour:
   lookBackTiltAngle: 5
   decelerateSpeedThreshold: 0.5
   tiltBlendDuration: 0.5
+
+# ─── WispTrail on WispLight (6000000001) — pale-cyan emissive trail ──────────
+--- !u!114 &6000000006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6000000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0f1a2b3c4d5e6f7890abcdef1234567, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  trailColor: {r: 0.0, g: 1.0, b: 1.0, a: 1.0}
+  emissionIntensity: 2.5
+  trailTime: 0.4
+  startWidth: 0.05
+  endWidth: 0.0
+  minVertexDistance: 0.05
