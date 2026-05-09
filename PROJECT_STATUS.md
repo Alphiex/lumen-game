@@ -161,6 +161,12 @@ under `art-reference/` — no longer the deliverable.
       MainCamera (component 1000000005) with foxTransform → Fox (fileID 5000000002),
       offset (0,4,-8), smoothTime 0.3, lookBackTiltAngle 5. 3 files, 124 insertions.
       **commit: 73eacbb**
+- [x] **URP global fog + atmospheric depth pass** — Fog volume override added to
+      LumenVolumeProfile.asset: exponential mode, density 0.06, start 2m, fogColor
+      #8B9BAF (cool blue-grey). Directional Light tuned for low-sun feel: intensity
+      0.85→0.65, shadow strength 0.9→0.75, rotation adjusted to ~30° elevation angle
+      (long shadows). 2 files changed, 17 insertions(+), 3 deletions(-).
+      **commit: e4d7308**
 
 ## Next 3 deliverables (in order)
 1. **Unity WebGL Build Support install + real WebGL build** — Install WebGL Build
@@ -175,11 +181,10 @@ under `art-reference/` — no longer the deliverable.
    ⚠️ BLOCKED: Needs Mike's OK on CC0 sources — confirm or name a preferred composer.
    Note: procedural SFX chimes (commit 3a7f24b) cover mote/gate/wind already; this
    step is for richer-feel music + bird/sigh layers if desired.
-3. **URP global fog + atmospheric depth pass** — Enable exponential fog override in
-   LumenVolumeProfile.asset: density ~0.06, start 2m, color cool blue-grey (#8B9BAF),
-   ensuring the forest corridor has its characteristic ankle-deep atmospheric haze
-   (design spec requirement). Also check Directional light intensity and shadow softness
-   for "low sun angle" feel. Pure YAML/text edit to .asset + ProjectSettings. Commit + push.
+3. **Wisp particle light trail** — WispTrail.cs: TrailRenderer component on the WispLight
+   GameObject emitting a short (0.4s) pale-cyan fading trail as the wisp moves. Trail
+   width 0.05→0 taper, emissive pale-cyan (matches WispOrb color). Adds the signature
+   "trailing light" visual from the design spec. Pure C# + YAML wiring. No blockers.
 
 ## Blocked / decisions needed from Mike
 - Apple Developer account access for TestFlight upload (needed for deliverable: First TestFlight build)
@@ -236,3 +241,4 @@ match is not required and would block delivery indefinitely.
 | 2026-05-08 | 6fdb17d | Mote collect VFX: WispController glow spike (0→3.0 over 0.05s, fades 0.25s), DaylightManager pale-gold screen flash (0→0.15 over 0.05s, fades 0.3s), MemoryMote burst scale (1×→2.5× over 0.1s then Destroy), MoteCollectOverlay added to UICanvas |
 | 2026-05-08 | 3a7f24b | Procedural SFX chimes: ProceduralAudio (sum-of-sines chord + LCG wind loop), ProceduralAudioManager singleton (mote C5-E5-G5 0.4s, gate C4-E4-G4-C5 1.2s, 8s seamless wind), BiomeGateAudio trigger, MemoryMote wired — no external audio assets |
 | 2026-05-09 | 73eacbb | Camera follow: CameraFollow.cs smooth-damps camera to fox+offset(0,4,-8), look-back 5° tilt on decelerate, EMA speed filter, RebaseOrientation() — wired to MainCamera in TheHush.unity |
+| 2026-05-09 | e4d7308 | URP fog pass: exponential fog (#8B9BAF, density 0.06, start 2m) added to LumenVolumeProfile; Directional Light low-sun tuning (intensity 0.65, shadow 0.75, ~30° angle) |
