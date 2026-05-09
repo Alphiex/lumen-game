@@ -54,6 +54,9 @@ public class MemoryMote : MonoBehaviour
         WispController.Instance?.OnMoteCollected();
         DaylightManager.Instance?.FlashMoteCollect();
 
+        // Procedural chime via the audio manager singleton.
+        ProceduralAudioManager.Instance?.PlayMoteChime();
+
         // Play burst particles detached so they survive after we disable
         if (collectBurst)
         {
