@@ -89,3 +89,17 @@ MonoBehaviour:
         value: 0.15   # intensity
       - overrideState: 1
         value: 0.5    # response
+  # Fog — exponential, late-afternoon haze (#8B9BAF)
+  - &7 !u!114
+    MonoBehaviour:
+      m_Script: {fileID: 11500000, guid: c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0, type: 3}
+      active: 1
+      parameters:
+      - overrideState: 1
+        value: 1      # mode: Exponential
+      - overrideState: 1
+        value: 0.06   # density
+      - overrideState: 1
+        value: 2      # start distance (m)
+      - overrideState: 1
+        value: {r: 0.545, g: 0.608, b: 0.686, a: 1}  # fogColor #8B9BAF
